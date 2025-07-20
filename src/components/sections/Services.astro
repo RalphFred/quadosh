@@ -1,0 +1,163 @@
+---
+const services = [
+  {
+    title: "ISO Certification Support",
+    description: "Complete guidance through ISO 9001, 14001, 45001, and other international standards. From gap analysis to certification maintenance.",
+    features: ["Gap Analysis", "Documentation Support", "Implementation Guidance", "Certification Maintenance"],
+    icon: "certificate",
+    popular: true
+  },
+  {
+    title: "Quality Management Systems",
+    description: "Design and implement robust QMS tailored to your organization's needs and industry requirements.",
+    features: ["QMS Design", "Process Mapping", "Document Control", "Performance Monitoring"],
+    icon: "system",
+    popular: false
+  },
+  {
+    title: "Process Improvement",
+    description: "Lean Six Sigma methodologies to eliminate waste, reduce variation, and optimize your operations.",
+    features: ["Lean Implementation", "Six Sigma Projects", "Value Stream Mapping", "Kaizen Events"],
+    icon: "improvement",
+    popular: false
+  },
+  {
+    title: "Training & Development",
+    description: "Comprehensive training programs to build quality awareness and competency across your organization.",
+    features: ["Quality Awareness", "Internal Auditor Training", "Management Training", "Custom Workshops"],
+    icon: "training",
+    popular: false
+  },
+  {
+    title: "Audit & Assessment",
+    description: "Internal audit programs and management system assessments to ensure ongoing compliance and improvement.",
+    features: ["Internal Audits", "Management Reviews", "Compliance Assessments", "Risk Assessments"],
+    icon: "audit",
+    popular: false
+  },
+  {
+    title: "Consulting Services",
+    description: "Strategic consulting to align quality initiatives with business objectives and drive organizational excellence.",
+    features: ["Strategic Planning", "Change Management", "Risk Management", "Performance Excellence"],
+    icon: "consulting",
+    popular: false
+  }
+];
+---
+
+<section id="services" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+        Our Services
+      </h2>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        Comprehensive quality management solutions designed to help your organization 
+        achieve operational excellence and sustainable growth.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map((service) => (
+        <div class={`relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 ${service.popular ? 'ring-2 ring-blue-500' : ''}`}>
+          {service.popular && (
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                Most Popular
+              </span>
+            </div>
+          )}
+          
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+              {service.icon === "certificate" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              )}
+              {service.icon === "system" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              )}
+              {service.icon === "improvement" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+              )}
+              {service.icon === "training" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              )}
+              {service.icon === "audit" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                </svg>
+              )}
+              {service.icon === "consulting" && (
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              )}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900">
+              {service.title}
+            </h3>
+          </div>
+          
+          <p class="text-gray-600 mb-6">
+            {service.description}
+          </p>
+          
+          <ul class="space-y-2 mb-8">
+            {service.features.map((feature) => (
+              <li class="flex items-center text-sm text-gray-600">
+                <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+          
+          <a
+            href="#contact"
+            class={`block w-full text-center py-3 px-4 rounded-lg font-medium transition-colors duration-200 ${
+              service.popular 
+                ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+            }`}
+          >
+            Learn More
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-16 text-center">
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12">
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">
+          Ready to Transform Your Quality Management?
+        </h3>
+        <p class="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
+          Let's discuss how our proven methodologies can help your organization 
+          achieve operational excellence and sustainable growth.
+        </p>
+        <a
+          href="#contact"
+          class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-blue-600 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-lg hover:shadow-xl"
+        >
+          Schedule a Consultation
+          <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section> 
