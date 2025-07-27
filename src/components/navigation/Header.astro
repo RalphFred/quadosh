@@ -1,13 +1,9 @@
 ---
-import logo from '../../assets/images/logo.jpg';
-import logoText from '../../assets/images/logo-text.jpg';
+import { NAVIGATION, SITE } from '../../constants/site';
 
-const navigation = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Contact', href: '#contact' },
-];
+// Using placeholder logo paths - these will be updated when actual logo files are available
+const logoPath = "/logo.jpg"; // Will be moved to public folder
+const logoTextPath = "/logo-text.jpg"; // Will be moved to public folder
 ---
 
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
@@ -15,27 +11,24 @@ const navigation = [
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <div class="flex items-center">
-        <a href="/" class="flex items-center space-x-2">
-          <img 
-            src={logo.src} 
-            alt="QMS Logo" 
-            class="h-10 w-10 rounded-lg object-cover"
-          />
-          <img 
-            src={logoText.src} 
-            alt="QMS Company" 
-            class="h-8 w-auto object-contain"
-          />
+        <a href="/" class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-emerald-600 to-orange-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-lg">Q</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-lg font-bold text-gray-900">{SITE.shortName}</span>
+            <span class="text-xs text-gray-600 -mt-1">Management Services</span>
+          </div>
         </a>
       </div>
 
       <!-- Desktop Navigation -->
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
-          {navigation.map((item) => (
+          {NAVIGATION.map((item) => (
             <a
               href={item.href}
-              class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              class="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
             >
               {item.name}
             </a>
@@ -47,7 +40,7 @@ const navigation = [
       <div class="hidden md:block">
         <a
           href="#contact"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+          class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Get Started
         </a>
@@ -57,7 +50,7 @@ const navigation = [
       <div class="md:hidden">
         <button
           type="button"
-          class="bg-gray-50 inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+          class="bg-gray-50 inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500"
           aria-controls="mobile-menu"
           aria-expanded="false"
           id="mobile-menu-button"
@@ -74,17 +67,17 @@ const navigation = [
     <!-- Mobile menu -->
     <div class="md:hidden hidden" id="mobile-menu">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-        {navigation.map((item) => (
+        {NAVIGATION.map((item) => (
           <a
             href={item.href}
-            class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+            class="text-gray-700 hover:text-emerald-600 block px-3 py-2 rounded-md text-base font-medium"
           >
             {item.name}
           </a>
         ))}
         <a
           href="#contact"
-          class="bg-blue-600 hover:bg-blue-700 text-white block px-3 py-2 rounded-md text-base font-medium text-center mt-4"
+          class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white block px-3 py-2 rounded-md text-base font-medium text-center mt-4"
         >
           Get Started
         </a>
