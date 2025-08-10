@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0669a5;
+  --color-secondary: #2ec8c8;
+}
+
+@utility bg-sand-black {
+  @apply bg-[url('/src/assets/black-sandy-bg.webp')] bg-gray-950/70;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.icon-menu {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 99;
+  width: 45px;
+  height: 45px;
+  position: relative;
+}
+
+.bar {
+  width: 32px;
+  height: 3px;
+  background-color: #1f1f1f;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: all 0.3s linear;
+  position: relative;
+}
+
+/* Default state */
+.bar--1 {
+  transform-origin: top left;
+}
+
+.bar--3 {
+  transform-origin: bottom left;
+}
+
+.open .bar--1 {
+  transform: rotate(45deg) translate(4px, -9px);
+  background-color: #fff;
+}
+
+.open .bar--2 {
+  opacity: 0;
+}
+
+.open .bar--3 {
+  transform: rotate(-45deg) translate(5px, 8px);
+  background-color: #fff;
+}
+
