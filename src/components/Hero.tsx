@@ -10,13 +10,17 @@ export default function Hero() {
         Bringing over a decade of medical expertise directly to your home or office — so you get the care you need, when and where you need it.
       </p>
 
-      <div className=" space-x-4">
-        <button className='bg-white border-2 border-primary px-6 py-2 rounded-full font-semibold'>
+      <div className=" space-x-4">        
+        <a href="#contact">
+        <button className='bg-white cursor-pointer border-2 border-primary px-6 py-2 rounded-full font-semibold'>
           Explore Services
         </button>
-        <button className='bg-primary text-white px-6 py-2 rounded-full'>
+      </a>
+      <a href="#contact">
+        <button className='bg-primary cursor-pointer text-white px-6 py-2 rounded-full'>
           Get Started
         </button>
+      </a>
       </div>
     </div>
     <div className='w-full lg:w-1/2'>

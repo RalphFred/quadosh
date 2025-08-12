@@ -29,6 +29,6 @@ export const services = [
   {
     icon: LibraryBig,
     title: "Health Talks & Wellness Education",
-    description: "Learn practical tips and advice to improve your daily health habits.",
+    description: "We can organise health presentations and outreaches at your events, societies, gatherings, office, etc.",
   },
 ];

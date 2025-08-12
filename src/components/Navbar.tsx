@@ -8,7 +8,6 @@ export default function Navbar() {
   const NavLinks = [
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
-    { name: "Testimonials", href: "#testimonials" },
   ];
 
   const handleClick = () => {
@@ -16,15 +15,16 @@ export default function Navbar() {
   };
   return (
    <nav className="bg-white rounded-lg px-2 py-2 lg:px-12 lg:py-2 flex justify-between items-center"> 
-     <img src={logo} alt="Quadosh Logo" className='h-12 lg:h-16 w-auto'/>
+     <img src={logo} alt="qadosh Logo" className='h-12 lg:h-16 w-auto'/>
 
-     <div className="hidden lg:flex items-center space-x-8">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Testimonials</a>
-      <button className='bg-primary text-white px-6 py-2 rounded-full'>
+     <div className="hidden lg:flex items-center space-x-16">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">
+        <button className='bg-primary text-white px-6 py-2 rounded-full'>
         Contact us
       </button>
+      </a>
      </div>
 
       {/* MObile menu goes in here */}
@@ -53,9 +53,11 @@ export default function Navbar() {
                 {link.name}
               </a>
             ))}
-             <button className='bg-white text-primary px-6 py-2 rounded-full mt-4'>
+             <a href="#contact">
+              <button className='bg-white text-primary px-6 py-2 rounded-full mt-4'>
               Contact us
             </button>
+             </a>
           </div>
         </div>
    </nav>

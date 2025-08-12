@@ -12,9 +12,11 @@ export default function Services() {
             </div>
 
           <div className="hidden lg:block">
-            <button className='bg-primary text-white px-6 py-2 rounded-full'>
-              Get Started
-            </button>
+      <a href="#contact">
+        <button className='bg-primary cursor-pointer text-white px-6 py-2 rounded-full'>
+          Get Started
+        </button>
+      </a>
           </div>
         </div>
 

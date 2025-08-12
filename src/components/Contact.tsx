@@ -93,7 +93,9 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium text-gray-700 mb-1">PHONE</p>
-                                        <p className="text-gray-900">234-9160-731-000</p>
+                                        <a href="tel:+2348057820833" className="text-gray-900 hover:text-primary transition-colors duration-200">
+                                            +234 805 782 0833
+                                        </a>
                                     </div>
                                 </div>
                                 
@@ -103,7 +105,9 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium text-gray-700 mb-1">EMAIL</p>
-                                        <p className="text-gray-900">quadosh@gmail.com</p>
+                                        <a href="mailto:qadoshmedical@gmail.com" className="text-gray-900 hover:text-primary transition-colors duration-200">
+                                            qadoshmedical@gmail.com
+                                        </a>
                                     </div>
                                 </div>
                             </div>
