@@ -1,4 +1,4 @@
-import heroImg from '../assets/img.jpg';
+import heroImg from '../assets/img2.jpg';
 
 export default function Who() {
   return (

@@ -1,5 +1,5 @@
 import { BookLock, CircleUserRound, Cross, PersonStanding } from "lucide-react";
-import heroImg from '../assets/img.jpg';
+import heroImg from '../assets/img3.jpg';
 
 export default function Why() {
 
