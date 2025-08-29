@@ -1,0 +1,30 @@
+{
+  "name": "Qadosh Medical Services",
+  "short_name": "Qadosh Medical",
+  "description": "Healthcare Right Where You Are - Professional medical concierge services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "164x164",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo-text.png",
+      "sizes": "201x201",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["health", "medical", "business"],
+  "lang": "en",
+  "dir": "ltr"
+}

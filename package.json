@@ -7,14 +7,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-sitemap": "node scripts/update-sitemap.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-router": "^1.130.12",
-    "lucide-react": "^0.539.0",
+    "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-helmet-async": "^2.0.5",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
