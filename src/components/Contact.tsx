@@ -1,7 +1,60 @@
 import { Helmet } from 'react-helmet-async';
-import { Phone, Mail } from 'lucide-react';
+import { Phone, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { sendEmail, type ContactFormData } from '../lib/emailjs';
 
 export default function Contact() {
+    const [formData, setFormData] = useState<ContactFormData>({
+        name: '',
+        phone: '',
+        email: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
+        type: 'success' | 'error' | null;
+        message: string;
+    }>({ type: null, message: '' });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: '' });
+
+        try {
+            const result = await sendEmail(formData);
+            setSubmitStatus({
+                type: result.success ? 'success' : 'error',
+                message: result.message
+            });
+
+            if (result.success) {
+                // Reset form on success
+                setFormData({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    message: ''
+                });
+            }
+        } catch {
+            setSubmitStatus({
+                type: 'error',
+                message: 'An unexpected error occurred. Please try again.'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -36,7 +89,7 @@ export default function Contact() {
                         <div className="bg-white rounded-lg p-8 shadow-lg">
                             <h3 className="text-2xl font-bold text-gray-900 mb-6">GET IN TOUCH</h3>
                             
-                            <form className="space-y-6">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -45,6 +98,9 @@ export default function Contact() {
                                         <input
                                             type="text"
                                             id="name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
                                             placeholder="Enter your name*"
                                             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                                             required
@@ -57,6 +113,9 @@ export default function Contact() {
                                         <input
                                             type="tel"
                                             id="phone"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
                                             placeholder="Enter your phone number*"
                                             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                                             required
@@ -71,6 +130,9 @@ export default function Contact() {
                                     <input
                                         type="email"
                                         id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
                                         placeholder="Enter your email*"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                                         required
@@ -83,17 +145,41 @@ export default function Contact() {
                                     </label>
                                     <textarea
                                         id="message"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleInputChange}
                                         rows={6}
                                         placeholder="Enter your message..."
                                         className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                                     ></textarea>
                                 </div>
+
+                                {/* Status Message */}
+                                {submitStatus.type && (
+                                    <div className={`flex items-center space-x-2 p-4 rounded-md ${
+                                        submitStatus.type === 'success' 
+                                            ? 'bg-green-50 text-green-800 border border-green-200' 
+                                            : 'bg-red-50 text-red-800 border border-red-200'
+                                    }`}>
+                                        {submitStatus.type === 'success' ? (
+                                            <CheckCircle size={20} className="text-green-600" />
+                                        ) : (
+                                            <AlertCircle size={20} className="text-red-600" />
+                                        )}
+                                        <span className="text-sm font-medium">{submitStatus.message}</span>
+                                    </div>
+                                )}
                                 
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary text-white py-3 px-6 rounded-full font-semibold hover:bg-primary/90 transition-colors duration-200"
+                                    disabled={isSubmitting}
+                                    className={`w-full py-3 px-6 rounded-full font-semibold transition-colors duration-200 ${
+                                        isSubmitting
+                                            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                            : 'bg-primary text-white hover:bg-primary/90'
+                                    }`}
                                 >
-                                    SEND MESSAGE
+                                    {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                                 </button>
                             </form>
                         </div>
