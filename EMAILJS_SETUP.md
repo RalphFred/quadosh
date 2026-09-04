@@ -45,7 +45,7 @@ This message was sent from your website contact form.
 
 ## Step 5: Configure Environment Variables
 
-1. Create a `.env` file in your project root (if it doesn't exist)
+1. Copy `.env.example` to `.env.local` in your project root
 2. Add the following variables:
 
 ```env
@@ -55,6 +55,10 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
 ```
 
 Replace the placeholder values with your actual IDs from steps 2-4.
+
+For the Vercel deployment, add the same three values under **Project Settings → Environment Variables** for Production and Preview, then redeploy. Vite reads these values at build time, so changing them without a new deployment will not update the live bundle.
+
+In the EmailJS template, keep the provider-connected address as the **From Email**. Set **Reply-To** to `{{reply_to}}`; using a visitor's address as the sender can cause Gmail/Outlook authentication failures. The form sends both the current field names and common EmailJS aliases (`name`, `user_name`, `from_name`, `email`, `user_email`, `from_email`, and `reply_to`) to remain compatible with existing templates.
 
 ## Step 6: Test the Integration
 
@@ -85,9 +89,14 @@ Replace the placeholder values with your actual IDs from steps 2-4.
    - Verify the email template is set up correctly
    - Ensure your email service provider allows the connection
 
-3. **CORS errors**
+3. **CORS or origin errors**
    - Make sure you're using the correct public key
-   - Check that your domain is added to EmailJS allowed origins
+   - Add both `https://qadoshmedical.com` and `https://www.qadoshmedical.com` to the EmailJS domain allowlist
+
+4. **Works locally but not on Vercel**
+   - Confirm all three variables are assigned to the Production environment
+   - Redeploy after any environment-variable change
+   - Check the browser console for the returned EmailJS status and message
 
 ### Testing in Development:
 

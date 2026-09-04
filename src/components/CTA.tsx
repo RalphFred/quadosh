@@ -1,15 +1,12 @@
+import { ArrowRight } from 'lucide-react';
+
 export default function CTA() {
   return (
-    <div className="bg-sand-black text-white px-4 py-8 lg:px-12 lg:py-12 rounded-lg flex flex-col lg:flex-row items-center justify-between space-y-4 text-center lg:text-left">
-      <div className="max-w-4xl">
-        <h2 className="text-3xl  font-semibold mb-4">Your Health, Your Schedule — Let’s Get Started</h2>
-      <p className="">Skip the waiting room and get expert care where you feel most comfortable. Send us a quick message today and we’ll arrange your visit.</p>
+    <section className="bg-primary py-24 text-white md:py-32">
+      <div className="section-shell flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
+        <h2 className="max-w-5xl text-[clamp(2.7rem,5.2vw,5.3rem)] font-medium leading-[0.98] tracking-[-0.045em] text-balance">Your health should fit your life, not interrupt it.</h2>
+        <a href="#contact" className="inline-flex min-h-14 shrink-0 items-center justify-center gap-3 rounded-full bg-white px-7 font-semibold text-primary transition-colors duration-150 hover:bg-wash">Arrange a visit <ArrowRight size={19} /></a>
       </div>
-      <a href="#contact">
-        <button className='bg-primary text-white px-6 py-2 rounded-full'>
-        Get Started
-      </button>
-      </a>
-    </div>
+    </section>
   );
 }

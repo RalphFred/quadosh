@@ -1,51 +1,86 @@
-import emailjs from '@emailjs/browser';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
-// EmailJS configuration
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'your_service_id';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'your_template_id';
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key';
+const emailConfig = {
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim(),
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim(),
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim(),
+};
 
-// Initialize EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
+const isPlaceholder = (value?: string) => !value || value.startsWith('your_');
 
 export interface ContactFormData {
   name: string;
   phone: string;
   email: string;
   message: string;
+  website?: string;
 }
 
-export const sendEmail = async (formData: ContactFormData): Promise<{ success: boolean; message: string }> => {
-  try {
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone,
-      message: formData.message,
-      to_email: 'qadoshmedical@gmail.com', // Your business email
-    };
+export interface EmailResult {
+  success: boolean;
+  message: string;
+}
 
-    const response = await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams
-    );
+export const isEmailConfigured = () =>
+  !isPlaceholder(emailConfig.serviceId) &&
+  !isPlaceholder(emailConfig.templateId) &&
+  !isPlaceholder(emailConfig.publicKey);
 
-    if (response.status === 200) {
-      return {
-        success: true,
-        message: 'Message sent successfully! We\'ll get back to you soon.'
-      };
-    } else {
-      throw new Error('Failed to send email');
-    }
-  } catch (error) {
-    console.error('EmailJS Error:', error);
+export const sendEmail = async (formData: ContactFormData): Promise<EmailResult> => {
+  // A hidden honeypot catches basic bots without inconveniencing real visitors.
+  if (formData.website) {
+    return { success: true, message: 'Thanks — your request has been received.' };
+  }
+
+  if (!isEmailConfigured()) {
+    console.error('EmailJS is not configured. Add the three VITE_EMAILJS_* variables.');
     return {
       success: false,
-      message: 'Failed to send message. Please try again or contact us directly.'
+      message: 'Online messages are temporarily unavailable. Please call, WhatsApp, or email us directly.',
+    };
+  }
+
+  const templateParams = {
+    // Keep both naming conventions so existing and replacement templates work.
+    name: formData.name,
+    user_name: formData.name,
+    from_name: formData.name,
+    email: formData.email,
+    user_email: formData.email,
+    from_email: formData.email,
+    reply_to: formData.email,
+    phone: formData.phone,
+    phone_number: formData.phone,
+    message: formData.message,
+    to_email: 'qadoshmedical@gmail.com',
+  };
+
+  try {
+    await emailjs.send(
+      emailConfig.serviceId!,
+      emailConfig.templateId!,
+      templateParams,
+      {
+        publicKey: emailConfig.publicKey!,
+        limitRate: { id: 'qadosh-contact-form', throttle: 10_000 },
+      },
+    );
+
+    return {
+      success: true,
+      message: 'Message sent. A member of our team will get back to you shortly.',
+    };
+  } catch (error) {
+    const status = error instanceof EmailJSResponseStatus ? error.status : undefined;
+    const detail = error instanceof EmailJSResponseStatus ? error.text : String(error);
+    console.error('EmailJS request failed', { status, detail });
+
+    return {
+      success: false,
+      message:
+        status === 429
+          ? 'Please wait a few seconds before trying again.'
+          : 'We could not send that message. Please call, WhatsApp, or email us directly.',
     };
   }
 };
-
-

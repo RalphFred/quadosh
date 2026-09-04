@@ -1,50 +1,35 @@
-import { Helmet } from 'react-helmet-async';
-import heroImg from '../assets/img.jpg';
+import { ArrowDownRight, ArrowRight } from 'lucide-react';
+import heroImg from '../assets/qadosh-hero-art.jpg';
 
 export default function Hero() {
   return (
-   <>
-     <Helmet>
-       <title>Qadosh Medical Services - Healthcare Right Where You Are</title>
-       <meta name="description" content="Get expert medical care delivered to your home or office. Professional doctors provide personalized healthcare services including consultations, health checks, and ongoing care. Serving Nigeria with quality medical concierge services." />
-       <meta name="keywords" content="home healthcare, medical concierge, doctor home visit, health check, medical services, Nigeria healthcare, home medical care, private doctor, health consultation" />
-       
-       {/* Open Graph */}
-       <meta property="og:title" content="Qadosh Medical Services - Healthcare Right Where You Are" />
-       <meta property="og:description" content="Get expert medical care delivered to your home or office. Professional doctors provide personalized healthcare services." />
-       <meta property="og:type" content="website" />
-       <meta property="og:url" content="https://qadoshmedical.com" />
-       
-       {/* Twitter */}
-       <meta name="twitter:title" content="Qadosh Medical Services - Healthcare Right Where You Are" />
-       <meta name="twitter:description" content="Get expert medical care delivered to your home or office. Professional doctors provide personalized healthcare services." />
-     </Helmet>
-     
-     <div className="bg-white rounded-lg px-2 py-2 lg:px-12 lg:py-18 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20"> 
-      <div className='w-full lg:w-1/2 space-y-4 text-center lg:text-left'>
-        <h1 className='text-5xl lg:text-6xl font-semibold mt-20 lg:mt-0'>Healthcare, Right Where <span className='text-primary'>You</span> Are.</h1>
+    <section id="home" className="bg-white pb-24 pt-12 md:pb-36 md:pt-20 lg:pb-44">
+      <div className="section-shell">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:gap-20">
+          <div className="relative z-10">
+            <h1 className="display-title max-w-6xl text-ink">Healthcare that comes to you.</h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-muted md:text-xl">
+              Experienced doctors provide consultations, health checks, and ongoing care in the privacy of your home or office.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a href="#contact" className="primary-button">Book a home visit <ArrowRight size={18} /></a>
+              <a href="#services" className="secondary-button">Explore our services <ArrowDownRight size={18} /></a>
+            </div>
+          </div>
 
-        <p className='text-lg'>
-          Bringing over a decade of medical expertise directly to your home or office — so you get the care you need, when and where you need it.
-        </p>
-
-        <div className=" space-x-4">        
-          <a href="#contact">
-          <button className='bg-white cursor-pointer border-2 border-primary px-6 py-2 rounded-full font-semibold'>
-            Explore Services
-          </button>
-        </a>
-        <a href="#contact">
-          <button className='bg-primary cursor-pointer text-white px-6 py-2 rounded-full'>
-            Get Started
-          </button>
-        </a>
+          <div className="relative lg:pl-6">
+            <div className="absolute -left-2 top-10 h-[72%] w-3 bg-secondary md:-left-5 md:w-5" aria-hidden="true" />
+            <div className="overflow-hidden rounded-[1.5rem]">
+              <img
+                data-motion-image
+                src={heroImg}
+                alt="Editorial illustration of a Qadosh doctor speaking with a patient during a home visit"
+                className="aspect-[4/5] w-full origin-center object-cover transition-transform duration-700 ease-out hover:scale-105"
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div className='w-full lg:w-1/2'>
-        <img src={heroImg} alt="Hero Image" className='object-cover rounded-lg shadow-lg' />
-      </div>
-     </div>
-   </>
+    </section>
   );
 }

@@ -16,7 +16,7 @@ export default function SEO({
   description = "Get expert medical care delivered to your home or office. Professional doctors provide personalized healthcare services including consultations, health checks, and ongoing care. Serving Nigeria with quality medical concierge services.",
   keywords = "home healthcare, medical concierge, doctor home visit, health check, medical services, Nigeria healthcare, home medical care, private doctor, health consultation",
   image = "/logo-text.png",
-  url = "https://qadoshmedical.com",
+  url = "https://www.qadoshmedical.com",
   type = "website",
   author = "Qadosh Medical Services",
   section = "home"
@@ -85,8 +85,8 @@ export default function SEO({
       
       {/* Additional Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="theme-color" content="#3B82F6" />
-      <meta name="msapplication-TileColor" content="#3B82F6" />
+      <meta name="theme-color" content="#0669a5" />
+      <meta name="msapplication-TileColor" content="#0669a5" />
       
       {/* Canonical URL */}
       <link rel="canonical" href={url} />

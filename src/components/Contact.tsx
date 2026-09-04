@@ -1,225 +1,89 @@
-import { Helmet } from 'react-helmet-async';
-import { Phone, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { sendEmail, type ContactFormData } from '../lib/emailjs';
 
+const initialForm: ContactFormData = { name: '', phone: '', email: '', message: '', website: '' };
+
 export default function Contact() {
-    const [formData, setFormData] = useState<ContactFormData>({
-        name: '',
-        phone: '',
-        email: '',
-        message: ''
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<{
-        type: 'success' | 'error' | null;
-        message: string;
-    }>({ type: null, message: '' });
+  const [formData, setFormData] = useState<ContactFormData>(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: name === 'phone' ? value.replace(/\D/g, '') : value }));
+  };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus({ type: null, message: '' });
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
 
-        try {
-            const result = await sendEmail(formData);
-            setSubmitStatus({
-                type: result.success ? 'success' : 'error',
-                message: result.message
-            });
+    const result = await sendEmail(formData);
+    setSubmitStatus({ type: result.success ? 'success' : 'error', message: result.message });
+    if (result.success) setFormData(initialForm);
+    setIsSubmitting(false);
+  };
 
-            if (result.success) {
-                // Reset form on success
-                setFormData({
-                    name: '',
-                    phone: '',
-                    email: '',
-                    message: ''
-                });
-            }
-        } catch {
-            setSubmitStatus({
-                type: 'error',
-                message: 'An unexpected error occurred. Please try again.'
-            });
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+  const fieldClass = 'form-field mt-2 w-full border-0 border-b border-ink/25 bg-transparent px-0 py-3 text-ink placeholder:text-muted/55 transition-[border-color,box-shadow] duration-150';
 
-    return (
-        <>
-            <Helmet>
-                <title>Contact Qadosh Medical Services - Get in Touch Today</title>
-                <meta name="description" content="Contact Qadosh Medical Services for home healthcare. Call +2348057820833 or email qadoshmedical@gmail.com. Get expert medical care at your convenience." />
-                <meta name="keywords" content="contact us, medical consultation, home healthcare contact, Nigeria medical services, phone consultation, medical concierge contact" />
-                
-                {/* Open Graph */}
-                <meta property="og:title" content="Contact Qadosh Medical Services - Get in Touch Today" />
-                <meta property="og:description" content="Contact Qadosh Medical Services for home healthcare. Call +2348057820833 or email qadoshmedical@gmail.com." />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://qadoshmedical.com/#contact" />
-                
-                {/* Twitter */}
-                <meta name="twitter:title" content="Contact Qadosh Medical Services - Get in Touch Today" />
-                <meta name="twitter:description" content="Contact Qadosh Medical Services for home healthcare. Call +2348057820833 or email qadoshmedical@gmail.com." />
-            </Helmet>
-            
-            <section id="contact" className="bg-white rounded-lg px-2 py-2 lg:px-12 lg:py-18">
-                <div className="">
-                    {/* Header */}
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">CONTACT US</h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                            If you have any questions, please feel free to get in touch with us via 
-                            phone, text, email, the form below, or even on social media!
-                        </p>
-                    </div>
+  return (
+    <section id="contact" className="bg-white py-28 md:py-44">
+      <div className="section-shell">
+        <div className="grid gap-10 border-b border-line pb-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+          <h2 className="section-title max-w-4xl">Tell us what care would make life easier right now.</h2>
+          <p className="body-copy lg:justify-self-end">Share a little about what you need. We’ll respond to discuss availability and the right next step. For emergencies, contact your local emergency service.</p>
+        </div>
 
-                    <div className="grid lg:grid-cols-2 gap-12">
-                        {/* Left Side - Contact Form */}
-                        <div className="bg-white rounded-lg p-8 shadow-lg">
-                            <h3 className="text-2xl font-bold text-gray-900 mb-6">GET IN TOUCH</h3>
-                            
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                                            NAME
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            placeholder="Enter your name*"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                                            PHONE NUMBER
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}
-                                            placeholder="Enter your phone number*"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                        EMAIL
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter your email*"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                                        required
-                                    />
-                                </div>
-                                
-                                <div>
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                                        YOUR MESSAGE
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleInputChange}
-                                        rows={6}
-                                        placeholder="Enter your message..."
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-                                    ></textarea>
-                                </div>
+        <div className="mt-16 grid gap-16 lg:grid-cols-[0.68fr_1.32fr]">
+          <div className="flex flex-col justify-between">
+            <div className="space-y-7">
+              <a href="tel:+2348057820833" className="group flex items-center gap-4 border-b border-line pb-6">
+                <span className="grid size-12 place-items-center rounded-full bg-wash text-primary"><Phone size={19} /></span>
+                <span><span className="block text-sm text-muted">Call us</span><span className="mt-1 block text-lg font-medium group-hover:text-primary">+234 805 782 0833</span></span>
+              </a>
+              <a href="mailto:qadoshmedical@gmail.com" className="group flex min-w-0 items-center gap-4 border-b border-line pb-6">
+                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-wash text-primary"><Mail size={19} /></span>
+                <span className="min-w-0"><span className="block text-sm text-muted">Email us</span><span className="mt-1 block break-all text-lg font-medium group-hover:text-primary">qadoshmedical@gmail.com</span></span>
+              </a>
+              <div className="flex items-center gap-4 border-b border-line pb-6">
+                <span className="grid size-12 place-items-center rounded-full bg-wash text-primary"><MapPin size={19} /></span>
+                <span><span className="block text-sm text-muted">Service area</span><span className="mt-1 block text-lg font-medium">Nigeria</span></span>
+              </div>
+            </div>
+            <p className="mt-12 max-w-sm text-sm leading-6 text-muted">Please do not send sensitive medical records through this form.</p>
+          </div>
 
-                                {/* Status Message */}
-                                {submitStatus.type && (
-                                    <div className={`flex items-center space-x-2 p-4 rounded-md ${
-                                        submitStatus.type === 'success' 
-                                            ? 'bg-green-50 text-green-800 border border-green-200' 
-                                            : 'bg-red-50 text-red-800 border border-red-200'
-                                    }`}>
-                                        {submitStatus.type === 'success' ? (
-                                            <CheckCircle size={20} className="text-green-600" />
-                                        ) : (
-                                            <AlertCircle size={20} className="text-red-600" />
-                                        )}
-                                        <span className="text-sm font-medium">{submitStatus.message}</span>
-                                    </div>
-                                )}
-                                
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className={`w-full py-3 px-6 rounded-full font-semibold transition-colors duration-200 ${
-                                        isSubmitting
-                                            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                                            : 'bg-primary text-white hover:bg-primary/90'
-                                    }`}
-                                >
-                                    {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
-                                </button>
-                            </form>
-                        </div>
+          <form onSubmit={handleSubmit} className="border border-line bg-wash p-7 sm:p-10 lg:p-14" aria-label="Contact Qadosh">
+            <div className="grid gap-8 sm:grid-cols-2">
+              <label className="group text-sm font-medium transition-colors focus-within:text-primary">Name
+                <input name="name" value={formData.name} onChange={handleInputChange} autoComplete="name" placeholder="John Doe" className={fieldClass} required />
+              </label>
+              <label className="group text-sm font-medium transition-colors focus-within:text-primary">Phone number
+                <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} autoComplete="tel" inputMode="numeric" pattern="[0-9]*" maxLength={15} placeholder="08000000000" className={fieldClass} required />
+              </label>
+            </div>
+            <label className="group mt-8 block text-sm font-medium transition-colors focus-within:text-primary">Email address
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} autoComplete="email" placeholder="johndoe@gmail.com" className={fieldClass} required />
+            </label>
+            <label className="group mt-8 block text-sm font-medium transition-colors focus-within:text-primary">How can we help?
+              <textarea name="message" value={formData.message} onChange={handleInputChange} rows={5} minLength={10} placeholder="I’d like to arrange a home consultation." className={`${fieldClass} resize-y`} required />
+            </label>
+            <label className="absolute -left-[10000px]" aria-hidden="true">Website
+              <input name="website" value={formData.website} onChange={handleInputChange} tabIndex={-1} autoComplete="off" />
+            </label>
 
-                        {/* Right Side - Contact Info & Hours */}
-                        <div className="space-y-8">
-                            {/* Contact Information */}
-                            <div className="bg-white rounded-lg p-8 shadow-lg">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-6">CONTACT INFORMATION</h3>
-                                
-                                <div className="space-y-6">
-                                    <div className="flex items-start space-x-4">
-                                        <div className="w-6 h-6 text-primary mt-1">
-                                            <Phone size={24} />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-700 mb-1">PHONE</p>
-                                            <a href="tel:+2348057820833" className="text-gray-900 hover:text-primary transition-colors duration-200">
-                                                +234 805 782 0833
-                                            </a>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-4">
-                                        <div className="w-6 h-6 text-primary mt-1">
-                                            <Mail size={24} />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-700 mb-1">EMAIL</p>
-                                            <a href="mailto:qadoshmedical@gmail.com" className="text-gray-900 hover:text-primary transition-colors duration-200">
-                                                qadoshmedical@gmail.com
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
-    )
+            {submitStatus.type && (
+              <div role={submitStatus.type === 'error' ? 'alert' : 'status'} className={`mt-6 flex items-start gap-3 border p-4 text-sm ${submitStatus.type === 'success' ? 'border-secondary bg-white text-ink' : 'border-red-300 bg-red-50 text-red-900'}`}>
+                {submitStatus.type === 'success' ? <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-primary" /> : <AlertCircle size={20} className="mt-0.5 shrink-0" />}
+                <span>{submitStatus.message}{submitStatus.type === 'error' && <> <a className="font-semibold underline" href="mailto:qadoshmedical@gmail.com">Email us instead.</a></>}</span>
+              </div>
+            )}
+
+            <button type="submit" disabled={isSubmitting} className="primary-button mt-8 min-w-48 disabled:cursor-not-allowed disabled:opacity-60">{isSubmitting ? 'Sending…' : 'Send your request'}</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -1,59 +1,46 @@
-import { BookLock, CircleUserRound, Cross, PersonStanding } from "lucide-react";
-import heroImg from '../assets/img3.jpg';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import careImage from '../assets/qadosh-community-care-art.jpg';
+
+const principles = [
+  { title: 'Time to be heard', text: 'A good consultation should leave room for questions, context, and clear next steps.' },
+  { title: 'Care in familiar surroundings', text: 'Home and office visits reduce avoidable stress and make quality care easier to access.' },
+  { title: 'Support that stays personal', text: 'Your health needs are individual. The attention you receive should be individual too.' },
+];
+
+const revealCopy = 'Good care should feel accessible, attentive, private, and personal.';
 
 export default function Why() {
-
-
+  const [active, setActive] = useState(0);
+  const previous = () => setActive((current) => (current - 1 + principles.length) % principles.length);
+  const next = () => setActive((current) => (current + 1) % principles.length);
 
   return (
-    <div className="bg-white rounded-lg px-2 py-2 lg:px-12 lg:py-18">
-      <h1 className="text-4xl lg:text-5xl font-semibold text-center mb-8 mt-12 lg:mt-0">Why Choose Us?</h1>
+    <section id="why-qadosh" className="overflow-hidden bg-wash py-20 md:py-44">
+      <div className="section-shell">
+        <p data-scrub-copy className="max-w-6xl text-[2.15rem] font-medium leading-[1.05] tracking-[-0.04em] text-ink sm:text-5xl md:text-[clamp(3.4rem,5.3vw,5.4rem)]">
+          {revealCopy.split(' ').map((word, index) => <span key={`${word}-${index}`} className="mr-[0.22em] inline-block">{word}</span>)}
+        </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
-        <div className="space-y-4">
-            <div className="flex flex-col items-center justify-center space-y-4 p-4">
-                <div className="rounded-full size-12 bg-primary flex justify-center items-center text-white">
-                  <CircleUserRound />
-                </div>
-                <h3 className="text-xl font-semibold">Experienced Professionals</h3>
-                <p>
-                    Our doctors have years of expertise from leading hospitals, ensuring you get top-tier medical care.
-                </p>
+        <div className="mt-12 grid items-stretch gap-px bg-line md:mt-20 lg:grid-cols-[1fr_1fr]">
+          <div className="overflow-hidden bg-white">
+            <img data-motion-image src={careImage} alt="Editorial illustration of a Qadosh doctor leading a preventive health conversation" className="h-[260px] w-full origin-center object-cover transition-transform duration-700 ease-out hover:scale-105 sm:h-[320px] lg:h-full lg:min-h-[440px]" />
+          </div>
+          <div className="flex flex-col justify-between bg-primary p-7 text-white sm:p-10 lg:min-h-[440px] lg:p-16">
+            <div aria-live="polite">
+              <p className="text-3xl font-medium tracking-[-0.035em] sm:text-4xl lg:text-5xl">{principles[active].title}</p>
+              <p className="mt-5 max-w-lg text-base leading-7 text-white/78 sm:text-lg sm:leading-8">{principles[active].text}</p>
             </div>
-            <div className="flex flex-col items-center justify-center space-y-4 p-4">
-                <div className="rounded-full size-12 bg-primary flex justify-center items-center text-white">
-                  <Cross /> 
-                </div>
-                <h3 className="text-xl font-semibold">Care at Your Convenience</h3>
-                <p>
-                    No waiting rooms or stressful trips — we come to your home or office when it suits you.
-                </p>
+            <div className="mt-10 flex items-end justify-between border-t border-white/30 pt-5 lg:mt-16 lg:pt-6">
+              <span className="text-sm font-medium tabular-nums text-white/65">{String(active + 1).padStart(2, '0')} / {String(principles.length).padStart(2, '0')}</span>
+              <div className="flex gap-2">
+                <button type="button" onClick={previous} aria-label="Previous care principle" className="grid size-12 place-items-center rounded-full border border-white/55 transition-colors duration-150 hover:bg-white hover:text-primary"><ChevronLeft size={20} /></button>
+                <button type="button" onClick={next} aria-label="Next care principle" className="grid size-12 place-items-center rounded-full border border-white/55 transition-colors duration-150 hover:bg-white hover:text-primary"><ChevronRight size={20} /></button>
+              </div>
             </div>
-        </div>
-        <div className="hidden lg:block">
-            <img src={heroImg} alt="Hero Image" className='object-cover rounded-lg shadow-lg h-full' />
-        </div>
-        <div className="space-y-4">
-            <div className="flex flex-col items-center justify-center space-y-4 p-4">
-                <div className="rounded-full size-12 bg-primary flex justify-center items-center text-white">
-                  <BookLock />
-                </div>
-                <h3 className="text-xl font-semibold">Complete Privacy & Comfort</h3>
-                <p>
-                    Receive treatment in a setting where you feel safe, relaxed, and at ease.
-                </p>
-            </div>
-            <div className="flex flex-col items-center justify-center space-y-4 p-4">
-                <div className="rounded-full size-12 bg-primary flex justify-center items-center text-white">
-                  <PersonStanding />
-                </div>
-                <h3 className="text-xl font-semibold">Personalized Attention</h3>
-                <p>
-                    Every consultation is tailored to your needs, with the time and focus you deserve.
-                </p>
-            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

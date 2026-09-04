@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react"
 import whatsappLogo from "../assets/images/whatsap-logo.svg"
 
@@ -31,27 +30,24 @@ export default function WhatsAppButton({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_30px_rgba(9,42,55,0.24)] transition hover:-translate-y-1 hover:bg-[#20bd5a]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           aria-label="Contact us on WhatsApp"
         >
-          {/* <MessageCircle className="w-7 h-7" /> */}
-          <img src={whatsappLogo} alt="Whatsapp Logo" width={28} height={28} className='size-7'/>
+          <img src={whatsappLogo} alt="" width={28} height={28} className='size-7'/>
 
 
           {/* Pulse animation */}
-          <div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20"></div>
-
           {/* Tooltip */}
           {showTooltip && (
             <div
-              className={`absolute right-full mr-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap transition-all duration-200 ${
+              className={`absolute right-full mr-3 whitespace-nowrap rounded-lg bg-night px-3 py-2 text-sm text-white shadow-lg transition-all duration-200 ${
                 isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
               }`}
             >
               Chat with us on WhatsApp
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1 w-2 h-2 bg-gray-900 rotate-45"></div>
+              <div className="absolute right-0 top-1/2 size-2 -translate-y-1/2 translate-x-1 rotate-45 bg-night"></div>
             </div>
           )}
         </a>

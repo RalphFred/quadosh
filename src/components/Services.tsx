@@ -1,60 +1,110 @@
-import { Helmet } from 'react-helmet-async';
-import { services } from "../constants";
+import { useState } from 'react';
+import homeCare from '../assets/qadosh-hero-art.jpg';
+import healthCheck from '../assets/qadosh-home-care-art.jpg';
+import wellness from '../assets/qadosh-community-care-art.jpg';
+import { services } from '../constants';
+
+const serviceGroups = [
+  { title: 'Care at home', summary: 'Medical attention without the journey.', image: homeCare, items: [services[0], services[2]] },
+  { title: 'Preventive care', summary: 'Stay ahead of changes in your health.', image: healthCheck, items: [services[1], services[4]] },
+  { title: 'Coordinated care', summary: 'Support beyond a single consultation.', image: wellness, items: [services[3], services[5]] },
+];
 
 export default function Services() {
-  return (
-    <>
-      <Helmet>
-        <title>Medical Services - Home Healthcare & Consultations | Qadosh</title>
-        <meta name="description" content="Comprehensive medical services including home consultations, health checks, long-term care, medical liaison, staff health screenings, and wellness education." />
-        <meta name="keywords" content="medical services, home consultations, health checks, long-term care, medical liaison, staff health screening, wellness education, home healthcare, medical concierge" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Medical Services - Home Healthcare & Consultations | Qadosh" />
-        <meta property="og:description" content="Comprehensive medical services including home consultations, health checks, long-term care, and wellness education." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://qadoshmedical.com/#services" />
-        
-        {/* Twitter */}
-        <meta name="twitter:title" content="Medical Services - Home Healthcare & Consultations | Qadosh" />
-        <meta name="twitter:description" content="Comprehensive medical services including home consultations, health checks, long-term care, and wellness education." />
-      </Helmet>
-      
-      <div className="bg-white rounded-lg px-2 py-2 lg:px-12 lg:py-18">
-          <div className="flex justify-between items-center w-full mt-8 lg:mt-0">
-              <div className="max-w-4xl">
-                <h1 className="text-4xl lg:text-5xl font-semibold mb-2">Our Services</h1>
-              <p>
-                From routine check-ups to long-term ongoing care, we bring trusted, high-quality healthcare right to your home or office — making it easier, safer, and more convenient to look after your health.
-              </p>
-              </div>
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeGroup = serviceGroups[activeIndex];
 
-            <div className="hidden lg:block">
-        <a href="#contact">
-          <button className='bg-primary cursor-pointer text-white px-6 py-2 rounded-full'>
-            Get Started
-          </button>
-        </a>
+  return (
+    <section id="services" className="bg-white py-28 md:py-44">
+      <div className="section-shell">
+        <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+          <h2 className="section-title max-w-4xl">Medical support, arranged around the way you live.</h2>
+          <p className="body-copy lg:max-w-md">Choose the kind of support you need now. We can also combine services into a plan that grows with you.</p>
+        </div>
+
+        <div className="mt-10 md:hidden">
+          <div className="grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line" role="tablist" aria-label="Service categories">
+            {serviceGroups.map((group, index) => {
+              const isActive = activeIndex === index;
+              return (
+                <button
+                  key={group.title}
+                  id={`service-tab-${index}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls="mobile-service-panel"
+                  className={`min-h-16 px-2 py-3 text-center text-sm font-medium leading-5 transition-colors ${isActive ? 'bg-primary text-white' : 'bg-white text-ink'}`}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  {group.title}
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            id="mobile-service-panel"
+            role="tabpanel"
+            aria-labelledby={`service-tab-${activeIndex}`}
+            className="relative mt-4 min-h-[430px] overflow-hidden rounded-2xl text-white"
+          >
+            <img src={activeGroup.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <span className="absolute inset-0 bg-primary/82" />
+            <div className="relative flex min-h-[430px] flex-col justify-end p-6">
+              <h3 className="text-3xl font-medium tracking-[-0.025em]">{activeGroup.title}</h3>
+              <p className="mt-3 text-base leading-7 text-white/82">{activeGroup.summary}</p>
+              <div className="mt-5 grid gap-4 border-t border-white/35 pt-5">
+                {activeGroup.items.map((item) => (
+                  <div key={item.title} className="flex items-start gap-3">
+                    <item.icon size={18} className="mt-1 shrink-0 text-secondary" />
+                    <div>
+                      <p className="font-medium">{item.title}</p>
+                      <p className="mt-1 text-sm leading-5 text-white/72">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {
-              services.map((service, index) => (
-                <div key={index} className="p-8 bg-blue-100 rounded-2xl space-y-4">
-                  <div className="rounded-full size-12 bg-primary flex justify-center items-center text-white">
-                    <service.icon />
-                  </div>
+        <div className="mt-16 hidden h-[560px] gap-px overflow-hidden rounded-2xl bg-white md:flex">
+          {serviceGroups.map((group, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <button
+                key={group.title}
+                type="button"
+                data-active={isActive}
+                aria-expanded={isActive}
+                className="service-panel group relative min-h-0 overflow-hidden text-left text-white"
+                onClick={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <img src={group.image} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <span className={`absolute inset-0 transition-colors duration-300 ${isActive ? 'bg-primary/78' : 'bg-ink/76'}`} />
 
-                  <div className="mt-2">
-                    <h3 className="text-xl font-semibold">{service.title}</h3>
-                    <p className="mt-1">{service.description}</p>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+                <span className="relative flex h-full min-h-44 flex-col justify-end p-6 sm:p-8 md:min-h-0">
+                  <span className={`text-2xl font-medium tracking-[-0.025em] transition-opacity duration-300 md:text-3xl ${isActive ? 'opacity-100' : 'md:[writing-mode:vertical-rl] md:rotate-180'}`}>{group.title}</span>
+                  <span className={`overflow-hidden transition-[max-height,opacity,margin] duration-500 ease-out ${isActive ? 'mt-4 max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <span className="block max-w-lg text-base leading-7 text-white/82">{group.summary}</span>
+                    <span className="mt-6 grid gap-3 border-t border-white/35 pt-5">
+                      {group.items.map((item) => (
+                        <span key={item.title} className="flex items-start gap-3">
+                          <item.icon size={18} className="mt-1 shrink-0 text-secondary" />
+                          <span><span className="block font-medium">{item.title}</span><span className="mt-1 block text-sm leading-5 text-white/70">{item.description}</span></span>
+                        </span>
+                      ))}
+                    </span>
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </>
+    </section>
   );
 }
